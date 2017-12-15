@@ -14,16 +14,10 @@ public final class FaceDetection {
 
     private final CvHaarClassifierCascade Classifier;
     private final CvMemStorage Storage;
+	private static final String front_face_file = "haarcascade_frontalface_alt.xml";
 
     public FaceDetection() throws IOException {
-        File file = null;
-        try {
-            URL url = new URL("https://github.com/opencv/opencv/blob/master/data/haarcascades/haarcascade_frontalface_alt.xml");
-            file = new File("front_face.xml");
-            FileUtils.copyURLToFile(url, file);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }                           //Download the front_face classifier file to detect faces
+        final File file = Loader.extractResource(front_face_file, null, "classifier", ".xml");
 
         Classifier = new CvHaarClassifierCascade(cvLoad(file.getAbsolutePath()));
         file.delete();
